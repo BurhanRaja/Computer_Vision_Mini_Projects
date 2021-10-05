@@ -73,7 +73,7 @@ def getcontours(img):
 
 getcontours(canny)
 
-imagestack = stackImages(0.6, ([img, gray, blur], [canny, imgcontour, blank]))
+imagestack = stackImages(0.6, ([img, imgcontour]))
 cv.imshow('Shape_Detection', imagestack)
 
 # ret, thresh = cv.threshold(gray, 50, 255, cv.THRESH_BINARY_INV)

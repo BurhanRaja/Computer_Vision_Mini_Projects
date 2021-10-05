@@ -1,7 +1,6 @@
 import cv2 as cv
 import numpy as np
 
-
 def stackImages(scale,imgArray):
     rows = len(imgArray)
     cols = len(imgArray[0])
@@ -33,42 +32,26 @@ def stackImages(scale,imgArray):
         ver = hor
     return ver
 
+img = cv.imread('Photos\chess.jpg')
+blank = np.zeros(img.shape[:2], dtype='uint8')
 
-def nothing(x):
-    pass
+gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+detected_lines = cv.Canny(gray, 125, 175)
+lines = cv.HoughLines(detected_lines, 1, np.pi / 180, 250)
 
+Hough_lines = img.copy()
+for lines in lines:
+    rho, theta = lines[0]
+    a = np.cos(theta)
+    b = np.sin(theta)
+    x0 = a * rho
+    y0 = b * rho
+    x1 = int(x0 + 1000 * (-b))
+    y1 = int(y0 + 1000 * (a))
+    x2 = int(x0 - 1000 * (-b))
+    y2 = int(y0 - 1000 * (a))
+    cv.line(Hough_lines, (x1, y1), (x2, y2), (0, 255, 0))
 
-# Creating a Trackbar
-cv.namedWindow("TrackBars")
-cv.resizeWindow("TrackBars",640,240)
-cv.createTrackbar("Hue Min","TrackBars", 0, 179, nothing)
-cv.createTrackbar("Hue Max","TrackBars", 179, 179, nothing)
-cv.createTrackbar("Sat Min","TrackBars", 0, 255, nothing)
-cv.createTrackbar("Sat Max","TrackBars", 255, 255, nothing)
-cv.createTrackbar("Val Min","TrackBars", 0, 255, nothing)
-cv.createTrackbar("Val Max","TrackBars", 255, 255, nothing)
-
-while True:
-    img = cv.imread('Photos\lambo.png')
-    imgHSV = cv.cvtColor(img,cv.COLOR_BGR2HSV)
-    h_min = cv.getTrackbarPos("Hue Min","TrackBars")
-    h_max = cv.getTrackbarPos("Hue Max", "TrackBars")
-    s_min = cv.getTrackbarPos("Sat Min", "TrackBars")
-    s_max = cv.getTrackbarPos("Sat Max", "TrackBars")
-    v_min = cv.getTrackbarPos("Val Min", "TrackBars")
-    v_max = cv.getTrackbarPos("Val Max", "TrackBars")
-
-    print(h_min,h_max,s_min,s_max,v_min,v_max)
-    
-    lower = np.array([h_min,s_min,v_min])
-    upper = np.array([h_max,s_max,v_max])
-    mask = cv.inRange(imgHSV,lower,upper)
-    result = cv.bitwise_and(img, img, mask=mask)
-    #cv.imshow('HSV', imgHSV)
-    #cv.imshow('Mask', mask)
-    #cv.imshow('Masked_img', result)
-    imageStack = stackImages(0.6, ([img, result]))
-    cv.imshow('ImageStack', imageStack)
-    cv.waitKey(0)
-
-
+imgstck = stackImages(0.5, ([img, detected_lines]))
+cv.imshow('All', imgstck)
+cv.waitKey(0)
