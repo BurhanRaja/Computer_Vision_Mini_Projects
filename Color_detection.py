@@ -49,7 +49,7 @@ cv.createTrackbar("Val Min","TrackBars", 0, 255, nothing)
 cv.createTrackbar("Val Max","TrackBars", 255, 255, nothing)
 
 while True:
-    img = cv.imread('Photos\lambo.png')
+    img = cv.imread('Resources\lambo.png')
     imgHSV = cv.cvtColor(img,cv.COLOR_BGR2HSV)
     h_min = cv.getTrackbarPos("Hue Min","TrackBars")
     h_max = cv.getTrackbarPos("Hue Max", "TrackBars")
