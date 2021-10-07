@@ -15,8 +15,23 @@ I have used 'laplacian' and 'soleb' to detect the edges of combination of both x
 
 ## 3. Line Detection
 ![Screenshot (23)](https://user-images.githubusercontent.com/76507095/136332093-03823fac-0692-49f4-be06-ff9b03ec6c33.png)
-![Screenshot (24)](https://user-images.githubusercontent.com/76507095/136332126-2898c42a-541b-4803-b567-fe7d53bfe3ac.png)
 
 Here, the green-line is the detected part as the lines.
 I have used 'Houghlines' to detect the lines in the image.
 
+## 4. Shape detection
+![Screenshot (18)](https://user-images.githubusercontent.com/76507095/136332456-b669bfe1-e81c-4329-a37b-e741987cc248.png)
+
+Here, the shapes of the images are determined.
+I have defined a function to detect the contours by telling to name the shape according to their corners with the help of if and else loops.
+The green-lines are the lines of shape detected.
+
+## Libraries
+
+pip install opencv-contrib-python
+
+pip install numpy
+
+## Images
+
+The images are given in Resources folder for you to try
